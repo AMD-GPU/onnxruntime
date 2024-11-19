@@ -1300,4 +1300,12 @@ namespace Dml
         allocInfo.Attach(static_cast<AllocationInfo*>(ptr));
     }
 
+    #if 0
+    void getDMLDevice(onnxruntime::IExecutionProvider* provider, _COM_Outptr_ IDMLDevice** dmlDevice)
+    {
+        ExecutionProvider* dmlexecutionprovider = static_cast<Dml::ExecutionProvider*>(provider);
+        dmlexecutionprovider->GetImpl()->GetDmlDevice(dmlDevice);
+        ExecutionProviderImpl::GetDmlDevice(dmlDevice);
+    }
+    #endif
 } // namespace Dml
