@@ -81,6 +81,8 @@ class IAllocator {
    */
   virtual void* Alloc(size_t size) = 0;
 
+  virtual void* Alloc(size_t size, bool isUML) { return nullptr; }
+
   virtual void Free(void* p) = 0;
 
   // Reserve() is an interface exposed for an implementation of IAllocator

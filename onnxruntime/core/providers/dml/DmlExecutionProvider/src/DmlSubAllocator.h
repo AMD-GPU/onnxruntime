@@ -10,7 +10,7 @@ namespace Dml
     class DmlSubAllocator
     {
     public:
-        virtual Microsoft::WRL::ComPtr<DmlResourceWrapper> Alloc(size_t size) = 0;
+        virtual Microsoft::WRL::ComPtr<DmlResourceWrapper> Alloc(size_t size, bool isUML = false) = 0;
         virtual ~DmlSubAllocator(){}
     };
 }

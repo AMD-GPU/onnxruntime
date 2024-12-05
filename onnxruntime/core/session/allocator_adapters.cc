@@ -24,7 +24,7 @@ OrtAllocatorImplWrappingIAllocator::OrtAllocatorImplWrappingIAllocator(onnxrunti
 }
 
 void* OrtAllocatorImplWrappingIAllocator::Alloc(size_t size) {
-  return i_allocator_->Alloc(size);
+  return i_allocator_->Alloc(size, true);
 }
 
 void* OrtAllocatorImplWrappingIAllocator::Reserve(size_t size) {
