@@ -13,7 +13,7 @@ namespace Dml
     {
     public:
         DmlCommittedResourceAllocator(ID3D12Device* device) : m_device(device) {}
-        Microsoft::WRL::ComPtr<DmlResourceWrapper> Alloc(size_t size, bool isUML = false) final;
+        Microsoft::WRL::ComPtr<DmlResourceWrapper> Alloc(size_t size, bool isUMA = false) final;
 
     private:
         ID3D12Device* m_device = nullptr;

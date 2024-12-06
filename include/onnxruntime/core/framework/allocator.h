@@ -81,7 +81,7 @@ class IAllocator {
    */
   virtual void* Alloc(size_t size) = 0;
 
-  virtual void* Alloc(size_t size, bool isUML) { return nullptr; }
+  virtual void* Alloc(size_t size, bool isUMA) { return nullptr; }
 
   virtual void Free(void* p) = 0;
 

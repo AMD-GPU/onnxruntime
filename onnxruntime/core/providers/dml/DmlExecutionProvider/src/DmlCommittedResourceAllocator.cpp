@@ -8,13 +8,13 @@
 
 namespace Dml
 {
-    ComPtr<DmlResourceWrapper> DmlCommittedResourceAllocator::Alloc(size_t size, bool isUML)
+    ComPtr<DmlResourceWrapper> DmlCommittedResourceAllocator::Alloc(size_t size, bool isUMA)
     {
         ComPtr<ID3D12Resource> resource;
 
         D3D12_HEAP_PROPERTIES heapProperties = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
 
-        if (isUML)
+        if (isUMA)
         {
             heapProperties = {};
             heapProperties.Type = D3D12_HEAP_TYPE_CUSTOM;

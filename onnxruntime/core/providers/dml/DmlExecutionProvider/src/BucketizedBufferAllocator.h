@@ -47,9 +47,9 @@ namespace Dml
         void SetDefaultRoundingMode(AllocatorRoundingMode roundingMode);
 
     public: // onnxruntime::IAllocator
-        void* Alloc(size_t size, AllocatorRoundingMode roundingMode, bool isUML = false);
+        void* Alloc(size_t size, AllocatorRoundingMode roundingMode, bool isUMA = false);
         void* Alloc(size_t size) final;
-        void* Alloc(size_t size, bool isUML) override;
+        void* Alloc(size_t size, bool isUMA) override;
         void Free(void* p) final;
 
     private:

@@ -81,12 +81,12 @@ namespace Dml
         return Alloc(size, m_defaultRoundingMode);
     }
 
-    void* BucketizedBufferAllocator::Alloc(size_t size, bool isUML)
+    void* BucketizedBufferAllocator::Alloc(size_t size, bool isUMA)
     {
-        return Alloc(size, m_defaultRoundingMode, isUML);
+        return Alloc(size, m_defaultRoundingMode, isUMA);
     }
 
-    void* BucketizedBufferAllocator::Alloc(size_t size, AllocatorRoundingMode roundingMode, bool isUML)
+    void* BucketizedBufferAllocator::Alloc(size_t size, AllocatorRoundingMode roundingMode, bool isUMA)
     {
         // For some reason lotus likes requesting 0 bytes of memory
         size = std::max<size_t>(1, size);
@@ -115,7 +115,7 @@ namespace Dml
             if (bucket->resources.empty())
             {
                 // No more resources in this bucket - allocate a new one
-                resourceWrapper = m_subAllocator->Alloc(onnxruntime::narrow<size_t>(bucketSize), isUML);
+                resourceWrapper = m_subAllocator->Alloc(onnxruntime::narrow<size_t>(bucketSize), isUMA);
                 resourceId = ++m_currentResourceId;
             }
             else
@@ -130,7 +130,7 @@ namespace Dml
         {
             // The allocation will not be pooled.  Construct a new one
             bucketSize = (size + 3) & ~3;
-            resourceWrapper = m_subAllocator->Alloc(onnxruntime::narrow<size_t>(bucketSize), isUML);
+            resourceWrapper = m_subAllocator->Alloc(onnxruntime::narrow<size_t>(bucketSize), isUMA);
             resourceId = ++m_currentResourceId;
         }
 
