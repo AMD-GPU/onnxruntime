@@ -216,16 +216,30 @@ namespace Dml
                 m_nonOwnedGraphInputsFromInitializers.resize(fusedNodeInputCount);
                 graphDesc.reuseCommandList = true;
 
-                // Compile the operator
-                m_compiledExecutionPlanOperator = DmlGraphFusionHelper::TryCreateCompiledOperator(
-                    graphDesc,
-                    *m_indexedSubGraph,
-                    cProviderImpl,
-                    &serializedGraphInputIndexToSubgraphInputIndex,
-                    &serializedGraphLargeConstantNameToSubgraphInputIndex);
+
+                if (providerImpl->GetCurrentGraphAnnotationId() == -1 && !providerImpl->firstCapture)
+                {
+                    m_compiledExecutionPlanOperator = providerImpl->storedCompiledExecutionPlanOperator;
+                }
+                else
+                {
+                    //Compile the operator
+                    m_compiledExecutionPlanOperator = DmlGraphFusionHelper::TryCreateCompiledOperator(
+                        graphDesc,
+                        *m_indexedSubGraph,
+                        cProviderImpl,
+                        &serializedGraphInputIndexToSubgraphInputIndex,
+                        &serializedGraphLargeConstantNameToSubgraphInputIndex);
+                }
 
                 // Queue references to objects which must be kept alive until resulting GPU work completes
                 m_winmlProvider->QueueReference(m_compiledExecutionPlanOperator.Get());
+
+                if (providerImpl->GetCurrentGraphAnnotationId() == -1 && providerImpl->firstCapture)
+                {
+                    providerImpl->firstCapture = false;
+                    providerImpl->storedCompiledExecutionPlanOperator = m_compiledExecutionPlanOperator;
+                }               
 
                 TranslateAndCompileGraph(Info(), initInputBindings);
 

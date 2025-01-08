@@ -182,6 +182,10 @@ namespace Dml
         onnxruntime::common::Status OnSessionInitializationEnd();
         std::vector<onnxruntime::AllocatorPtr> CreatePreferredAllocators();
 
+        bool firstCapture = true;
+        ComPtr<IDMLCompiledOperator> storedCompiledExecutionPlanOperator;
+
+
     private:
         void Initialize(ID3D12CommandQueue* queue, ExecutionProvider& executionProvider);
 
