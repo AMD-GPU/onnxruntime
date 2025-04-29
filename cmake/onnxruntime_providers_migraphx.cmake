@@ -21,8 +21,10 @@
   # Add search paths for default rocm installation
   list(APPEND CMAKE_PREFIX_PATH /opt/rocm/hcc /opt/rocm/hip /opt/rocm $ENV{HIP_PATH})
 
-  # Suppress the warning about the small capitals of the package name - Enable when support to CMake 3.27.0 is used
-  # cmake_policy(SET CMP0144 NEW)
+  if(POLICY CMP0144)
+      # Suppress the warning about the small capitals of the package name
+      cmake_policy(SET CMP0144 NEW)
+  endif()
 
   if(WIN32 AND NOT HIP_PLATFORM)
     set(HIP_PLATFORM "amd")
@@ -43,6 +45,9 @@
   onnxruntime_add_shared_library_module(onnxruntime_providers_migraphx ${onnxruntime_providers_migraphx_cc_srcs})
   onnxruntime_add_include_to_target(onnxruntime_providers_migraphx onnxruntime_common onnx flatbuffers::flatbuffers Boost::mp11 safeint_interface)
   add_dependencies(onnxruntime_providers_migraphx onnxruntime_providers_shared ${onnxruntime_EXTERNAL_DEPENDENCIES})
+  if(WIN32)
+    set_target_properties(onnxruntime_providers_migraphx PROPERTIES OUTPUT_NAME onnxruntime_providers_amd_gpu)
+  endif()
   target_link_libraries(onnxruntime_providers_migraphx PRIVATE ${migraphx_libs} ${ONNXRUNTIME_PROVIDERS_SHARED} onnx flatbuffers::flatbuffers Boost::mp11 safeint_interface)
   target_include_directories(onnxruntime_providers_migraphx PRIVATE ${ONNXRUNTIME_ROOT} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_BINARY_DIR}/amdgpu/onnxruntime)
   set_target_properties(onnxruntime_providers_migraphx PROPERTIES LINKER_LANGUAGE CXX)

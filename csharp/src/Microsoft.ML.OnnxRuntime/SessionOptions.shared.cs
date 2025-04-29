@@ -333,7 +333,7 @@ namespace Microsoft.ML.OnnxRuntime
 #if __MOBILE__
             throw new NotSupportedException($"The MIGraphX Execution Provider is not supported in this build");
 #else
-            NativeApiStatus.VerifySuccess(NativeMethods.OrtSessionOptionsAppendExecutionProvider_MIGraphX(handle, deviceId));
+            NativeApiStatus.VerifySuccess(NativeMethods.OrtSessionOptionsAppendExecutionProvider_AMDGPU(handle, deviceId));
 #endif
         }
 
@@ -801,6 +801,16 @@ namespace Microsoft.ML.OnnxRuntime
             }
         }
         private ExecutionMode _executionMode = ExecutionMode.ORT_SEQUENTIAL;
+
+        /// <summary>
+        /// Sets the load cancellation flag for the session. Default is set to false.
+        /// Provides an opportunity for the user to cancel model loading.
+        /// </summary>
+        /// <param name="value">true to request cancellation, false to proceed</param>
+        public void SetLoadCancellationFlag(bool value)
+        {
+            NativeApiStatus.VerifySuccess(NativeMethods.OrtSessionOptionsSetLoadCancellationFlag(handle, value));
+        }
 
         #endregion
 
