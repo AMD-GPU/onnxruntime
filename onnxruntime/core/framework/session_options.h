@@ -272,6 +272,9 @@ struct SessionOptions {
   bool has_explicit_ep_context_gen_options = false;
   EpContextModelGenerationOptions ep_context_gen_options = {};
   EpContextModelGenerationOptions GetEpContextGenerationOptions() const;
+
+  std::vector<void*> d3d12_resources;
+  void* d3d12_device_resources = nullptr;
 };
 
 inline std::ostream& operator<<(std::ostream& os, const SessionOptions& session_options) {

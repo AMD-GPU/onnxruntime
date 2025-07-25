@@ -700,4 +700,10 @@ ORT_API_STATUS_IMPL(ReleaseSharedAllocator, _In_ OrtEnv* env, _In_ const OrtEpDe
 ORT_API_STATUS_IMPL(GetTensorData, _In_ const OrtValue* value, _Outptr_ const void** out);
 
 ORT_API_STATUS_IMPL(GetSessionOptionsConfigEntries, _In_ const OrtSessionOptions* options, _Outptr_ OrtKeyValuePairs** out);
+
+ORT_API_STATUS_IMPL(SetD3d12DeviceResources, _In_ OrtSessionOptions* options, _In_ void* resource);
+ORT_API_STATUS_IMPL(GetD3d12DeviceResources, _Inout_ OrtSessionOptions* options, _Outptr_ void** output);
+ORT_API_STATUS_IMPL(GetD3d12Resource, _Inout_ OrtSessionOptions* options, _Inout_ int index, _Outptr_ void** output);
+ORT_API_STATUS_IMPL(PushD3d12Resource, _In_ OrtSessionOptions* options, _In_ void* resource);
+ORT_API_STATUS_IMPL(ClearResources, _Inout_ OrtSessionOptions* options);
 }  // namespace OrtApis

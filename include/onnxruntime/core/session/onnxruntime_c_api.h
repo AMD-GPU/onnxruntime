@@ -6163,6 +6163,12 @@ struct OrtApi {
    * \since Version 1.23.
    */
   ORT_API2_STATUS(GetSessionOptionsConfigEntries, _In_ const OrtSessionOptions* options, _Outptr_ OrtKeyValuePairs** out);
+
+  ORT_API2_STATUS(SetD3d12DeviceResources, _In_ OrtSessionOptions* options, _In_ void* resource);
+  ORT_API2_STATUS(GetD3d12DeviceResources, _Inout_ OrtSessionOptions* options, _Outptr_ void** output);
+  ORT_API2_STATUS(GetD3d12Resource, _Inout_ OrtSessionOptions* options, _Inout_ int index, _Outptr_ void** output);
+  ORT_API2_STATUS(PushD3d12Resource, _In_ OrtSessionOptions* options, _In_ void* resource);
+  ORT_API2_STATUS(ClearResources, _Inout_ OrtSessionOptions* options);
 };
 
 /*

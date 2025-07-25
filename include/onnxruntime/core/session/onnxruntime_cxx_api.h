@@ -1033,6 +1033,8 @@ struct ConstSessionOptionsImpl : Base<T> {
   std::string GetConfigEntry(const char* config_key) const;  ///< Wraps OrtApi::GetSessionConfigEntry
   bool HasConfigEntry(const char* config_key) const;         ///< Wraps OrtApi::HasSessionConfigEntry
   std::string GetConfigEntryOrDefault(const char* config_key, const std::string& def) const;
+  const void* GetD3d12DeviceResources();
+  const void* GetD3d12Resource(int index);
 };
 
 template <typename T>
@@ -1122,6 +1124,10 @@ struct SessionOptionsImpl : ConstSessionOptionsImpl<T> {
 
   ///< Wraps OrtApi::SessionOptionsAppendExecutionProvider_VitisAI
   SessionOptionsImpl& AppendExecutionProvider_VitisAI(const std::unordered_map<std::string, std::string>& provider_options = {});
+
+  SessionOptionsImpl& SetD3d12DeviceResources(void* resource);
+  SessionOptionsImpl& PushD3d12Resource(void* resource);
+  SessionOptionsImpl& ClearResources();
 };
 }  // namespace detail
 

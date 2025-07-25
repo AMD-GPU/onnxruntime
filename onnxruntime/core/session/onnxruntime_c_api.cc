@@ -1098,6 +1098,32 @@ ORT_API_STATUS_IMPL(OrtApis::GetTensorData, _Inout_ const OrtValue* value, _Outp
   API_IMPL_END
 }
 
+
+ORT_API_STATUS_IMPL(OrtApis::SetD3d12DeviceResources, _In_ OrtSessionOptions* options, _In_ void* resource) {
+    options->value.d3d12_device_resources = resource;
+    return nullptr;
+}
+
+ORT_API_STATUS_IMPL(OrtApis::GetD3d12DeviceResources, _In_ OrtSessionOptions* options, _Outptr_ void** output) {
+    *output = options->value.d3d12_device_resources;
+    return nullptr;
+}
+
+ORT_API_STATUS_IMPL(OrtApis::GetD3d12Resource, _In_ OrtSessionOptions* options, _In_ int index, _Outptr_ void** output) {
+    *output = options->value.d3d12_resources[index];
+    return nullptr;
+}
+
+ORT_API_STATUS_IMPL(OrtApis::PushD3d12Resource, _In_ OrtSessionOptions* options, _In_ void* resource) {
+    options->value.d3d12_resources.push_back(resource);
+    return nullptr;
+}
+
+ORT_API_STATUS_IMPL(OrtApis::ClearResources, _In_ OrtSessionOptions* options) {
+    options->value.d3d12_resources.clear();
+    return nullptr;
+}
+
 ORT_API_STATUS_IMPL(OrtApis::FillStringTensor, _Inout_ OrtValue* value, _In_ const char* const* s, size_t s_len) {
   TENSOR_READWRITE_API_BEGIN
   auto* dst = tensor->MutableData<std::string>();
@@ -3762,8 +3788,12 @@ static constexpr OrtApi ort_api_1_to_23 = {
     &OrtApis::ReleaseSharedAllocator,
 
     &OrtApis::GetTensorData,
-
     &OrtApis::GetSessionOptionsConfigEntries,
+    &OrtApis::SetD3d12DeviceResources,
+    &OrtApis::GetD3d12DeviceResources,
+    &OrtApis::GetD3d12Resource,
+    &OrtApis::PushD3d12Resource,
+    &OrtApis::ClearResources,
 };
 
 // OrtApiBase can never change as there is no way to know what version of OrtApiBase is returned by OrtGetApiBase.

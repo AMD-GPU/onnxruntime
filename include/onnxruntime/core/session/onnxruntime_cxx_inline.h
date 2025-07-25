@@ -1269,6 +1269,40 @@ inline SessionOptionsImpl<T>& SessionOptionsImpl<T>::RegisterCustomOpsUsingFunct
   return *this;
 }
 
+template <typename T>
+inline SessionOptionsImpl<T>& SessionOptionsImpl<T>::SetD3d12DeviceResources(void* resource) {
+    ThrowOnError(GetApi().SetD3d12DeviceResources(this->p_, resource));
+    return *this;
+}
+
+template <typename T>
+inline const void* ConstSessionOptionsImpl<T>::GetD3d12DeviceResources() {
+    int* dsfsdfsd = new int[1];
+    void* out = (void*)dsfsdfsd;
+    ThrowOnError(GetApi().GetD3d12DeviceResources(this->p_, &out));
+    return out;
+}
+
+template <typename T>
+inline const void* ConstSessionOptionsImpl<T>::GetD3d12Resource(int index) {
+    int* dsfsdfsd = new int[1];
+    void* out = (void*)dsfsdfsd;
+    ThrowOnError(GetApi().GetD3d12Resource(this->p_, index, &out));
+    return out;
+}
+
+template <typename T>
+inline SessionOptionsImpl<T>& SessionOptionsImpl<T>::PushD3d12Resource(void* resource) {
+    ThrowOnError(GetApi().PushD3d12Resource(this->p_, resource));
+    return *this;
+}
+
+template <typename T>
+inline SessionOptionsImpl<T>& SessionOptionsImpl<T>::ClearResources() {
+    ThrowOnError(GetApi().ClearResources(this->p_));
+    return *this;
+}
+
 /// Session
 template <typename T>
 inline size_t ConstSessionImpl<T>::GetInputCount() const {
